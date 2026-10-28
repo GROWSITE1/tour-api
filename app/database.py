@@ -4,7 +4,9 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 url = os.getenv("DATABASE_URL", "sqlite:///./local.db")
 if url.startswith("postgres://"):
-    url = url.replace("postgres://", "postgresql://", 1)
+    url = url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif url.startswith("postgresql://"):
+    url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 engine = create_engine(
     url,
